@@ -4,9 +4,16 @@ WORKDIR /app
 
 COPY . .
 
+# Make mvnw executable
 RUN chmod +x mvnw
+
+# Build Spring Boot jar
 RUN ./mvnw clean package -DskipTests
+
+# Debug: show jar files (helps confirm build)
+RUN ls -l target
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "target/Portfolio-0.0.1-SNAPSHOT.jar"]
+# ✅ SHELL FORM CMD (wildcard works here)
+CMD java -jar target/*.jar

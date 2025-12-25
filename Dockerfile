@@ -1,17 +1,20 @@
-# Use Java 17
+# Java 17 base image
 FROM eclipse-temurin:17-jdk
 
-# Set working directory
+# Working directory
 WORKDIR /app
 
-# Copy project files
+# Copy all files
 COPY . .
 
-# Build the application
+# ✅ IMPORTANT: make mvnw executable
+RUN chmod +x mvnw
+
+# Build Spring Boot app
 RUN ./mvnw clean package -DskipTests
 
-# Expose port (Render uses dynamic port)
+# Expose port (Spring Boot default)
 EXPOSE 8080
 
-# Run the app
+# Run application
 CMD ["java", "-jar", "target/*.jar"]
